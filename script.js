@@ -1,27 +1,27 @@
 const products = [
   {
     id:"phone", category:"phones", categoryName:"Синтетика",
-    name:"Мефедрон", price:200, image:"assets/phone.png",
+    name:"Мефедрон", price:200, image:"phone.png",
     description:"Поможет зарядиться энергией на весь день и забыть о внешних проблемах.",
   },
   {
     id:"phone-pro", category:"phones", categoryName:"Синтетика",
-    name:"Метамфетамин", price:200, image:"assets/phone-pro.png",
+    name:"Метамфетамин", price:200, image:"phone-pro.png",
     description:"Хочешь покайфовать от стекла? Это для тебя.",
   },
   {
     id:"audio", category:"audio", categoryName:"Шприцы и прочее",
-    name:"Героин", price:200, image:"assets/headphones.png",
+    name:"Героин", price:200, image:"headphones.png",
     description:"Лучший наркотик в шприце.",
   },
   {
     id:"audio", category:"audio", categoryName:"Шприцы и прочее",
-    name:"Кокаин", price:200, image:"assets/headphones.png",
+    name:"Кокаин", price:200, image:"headphones.png",
     description:"Настроение на весь день!",
   },
   {
     id:"computer", category:"computers", categoryName:"Трава",
-    name:"Марихуанна", price:200, image:"assets/computer.png",
+    name:"Марихуанна", price:200, image:"computer.png",
     description:"Подходит для тех, кто хочет снизить напряжение.",
   },
 ];
