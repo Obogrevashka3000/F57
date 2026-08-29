@@ -15,7 +15,7 @@ const products = [
     description:"Лучший наркотик в шприце.",
   },
   {
-    id:"audio", category:"audio", categoryName:"Шприцы и прочее",
+    id:"audio-pro", category:"audio", categoryName:"Шприцы и прочее",
     name:"Кокаин", price:200, image:"headphones.png",
     description:"Настроение на весь день!",
   },
@@ -132,7 +132,7 @@ $("#checkoutForm").addEventListener("submit",e=>{
   e.target.reset();
 });
 
-/* ---------------- GTA V MAP: fit + zoom + pan + point selection ---------------- */
+
 const viewport = $("#mapViewport");
 const world = $("#mapWorld");
 const mapImg = $("#gtaMap");
