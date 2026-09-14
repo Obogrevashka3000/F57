@@ -1,11 +1,11 @@
 const ADMIN_CODE = "F57-ADM-7Q2M-9X4K"; // Demo front-end code. For real security move auth to a Vercel API.
 
 const products = [
-  {id:"iphone",name:"Мефедрон",category:"phone",label:"Mef / F57-001",image:"assets/phone.png",description:"Лучший порошок для получения эйфории",specs:[["Цена","10/10"],["Доступность","10/10"],["Эффект","10/10"]]},
-  {id:"pixel",name:"Кокаин",category:"phone",label:"Koks / F57-002",image:"assets/phone-pro.png",description:"Позволяет расслабиться.",specs:[["Цена","10/10"],["Доступность","10/10"],["Эффект","10/10"]]},
-  {id:"airpods",name:"Героин",category:"audio",label:"Geroin / F57-004",image:"assets/headphones.png",description:"Лучший наркотик в шприце.",specs:[["Цена","10/10"],["Доступность","10/10"],["Эффект","10/10"]]},
-  {id:"sony",name:"Дезоморфин",category:"audio",label:"Morphine / F57-005",image:"assets/headphones-pro.png",description:"Снимает стресс.",specs:[["Цена","10/10"],["Доступность","10/10"],["Эффект","10/10"]]},
-  {id:"computer",name:"Марихуанна",category:"computer",label:"Marihuanna / F57-007",image:"assets/computer.png",description:"Хотите пересесть с сигарет на потяжелее? Это для вас.",specs:[["Цена","10/10"],["Доступность","10/10"],["Эффект","10/10"]]},
+  {id:"iphone",name:"Мефедрон",category:"phone",label:"Mef / F57-001",image:"phone.png",description:"Лучший порошок для получения эйфории",specs:[["Цена","10/10"],["Доступность","10/10"],["Эффект","10/10"]]},
+  {id:"pixel",name:"Кокаин",category:"phone",label:"Koks / F57-002",image:"phone-pro.png",description:"Позволяет расслабиться.",specs:[["Цена","10/10"],["Доступность","10/10"],["Эффект","10/10"]]},
+  {id:"airpods",name:"Героин",category:"audio",label:"Geroin / F57-004",image:"headphones.png",description:"Лучший наркотик в шприце.",specs:[["Цена","10/10"],["Доступность","10/10"],["Эффект","10/10"]]},
+  {id:"sony",name:"Дезоморфин",category:"audio",label:"Morphine / F57-005",image:"headphones-pro.png",description:"Снимает стресс.",specs:[["Цена","10/10"],["Доступность","10/10"],["Эффект","10/10"]]},
+  {id:"computer",name:"Марихуанна",category:"computer",label:"Marihuanna / F57-007",image:"computer.png",description:"Хотите пересесть с сигарет на потяжелее? Это для вас.",specs:[["Цена","10/10"],["Доступность","10/10"],["Эффект","10/10"]]},
 ];
 
 const tasks = {
