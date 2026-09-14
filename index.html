@@ -1,213 +1,154 @@
-<!-- IC ИНФОРМАЦИЯ: В КОДЕ ДЕТЕКТИВАМИ НАЙДЕНА ЛАЗЕЙКА! АДРЕС ПОЧТЫ ВЛАДЕЛЬЦА САЙТА - Obogrevatel3000@yandex.ru -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>F57 — закрытая витрина</title>
+  <title>F57 — Free Network</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="app">
-    <aside class="sidebar">
-      <div class="brand">F57<span>.</span></div>
-      <div class="brand-sub">PRIVATE MARKET</div>
-      <nav class="main-nav">
-        <button class="nav-item active" data-page="catalog">Все товары</button>
-        <div class="nav-label">Каталог</div>
-        <button class="nav-item" data-category="phones">Синтетика</button>
-        <button class="nav-item" data-category="audio">Шприцы и прочее</button>
-        <button class="nav-item" data-category="computers">Трава</button>
-      </nav>
+  <aside class="sidebar">
+    <div class="brand">F57<span>/</span></div>
+    <div class="status"><i></i> NETWORK ONLINE</div>
+    <nav>
+      <button class="nav-item active" data-category="all">Все товары</button>
+      <button class="nav-item" data-category="phone">Синтетика</button>
+      <button class="nav-item" data-category="audio">Шприцы и прочее</button>
+      <button class="nav-item" data-category="computer">Травы</button>
+    </nav>
+    <div class="sidebar-bottom">
+      <button id="aboutButton" class="nav-item">О нас</button>
+      <button id="adminButton" class="nav-item muted">Администратор</button>
+    </div>
+  </aside>
 
-      <div class="sidebar-bottom">
-        <button class="nav-item" data-page="donate">Пожертвовать</button>
-        <button class="nav-item" data-page="about">О нас</button>
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">F57 / DISTRIBUTION</p>
+        <h1>Вещества без оплаты.</h1>
       </div>
+      <div class="top-meta">FREE DRUGS · 057</div>
+    </header>
 
-      <div class="side-status">
-        <span class="status-dot"></span>
-        connection secured
-      </div>
-    </aside>
+    <section class="notice">
+      <span>01</span>
+      <p>Выберите вещество, размер и задание. После проверки выполнения вещество передаётся курьером.</p>
+    </section>
 
-    <main class="content">
-      <section id="catalogPage" class="page active-page">
-        <header class="page-header">
-          <div>
-            <div class="eyebrow">F57 / MARKET</div>
-            <h1>Вещества без лишнего.</h1>
-            <p>Минимальная витрина. Максимальная тишина.</p>
-          </div>
-          <div class="header-meta"><b>OOC:</b> САЙТ ЯВЛЯЕТСЯ ФЕЙКОВЫМ! НАРКОТИКИ - ПЛОХО!</div>
-        </header>
+    <section id="productsGrid" class="products-grid"></section>
+  </main>
 
-        <div id="productGrid" class="product-grid"></div>
-      </section>
-
-      <section id="aboutPage" class="page">
-        <div class="simple-page">
-          <div class="eyebrow">F57 / ABOUT</div>
-          <h1>О нас</h1>
-          <p>F57 появился как закрытая площадка для тех, кто не любит лишних вопросов, публичных витрин и ненужного шума.</p>
-          <p>Мы работаем через закрытую инфраструктуру и принимаем заказы только в пределах штата Майами. Никаких публичных профилей, рекламных кабинетов или открытого каталога.</p>
-          <div class="about-grid">
-            <div><strong>01</strong><span>Закрытая витрина</span></div>
-            <div><strong>02</strong><span>Анонимная доставка</span></div>
-            <div><strong>03</strong><span>Минимум следов</span></div>
+  <!-- PRODUCT -->
+  <div class="modal" id="productModal">
+    <div class="modal-overlay"></div>
+    <div class="modal-card product-detail">
+      <button class="close-modal">×</button>
+      <div class="detail-image"><img id="modalImage" src="assets/placeholder.png" alt=""></div>
+      <div class="detail-content">
+        <p class="eyebrow" id="modalCategory"></p>
+        <h2 id="modalName"></h2>
+        <p id="modalDescription" class="muted-text"></p>
+        <div id="modalSpecs" class="specs"></div>
+        <div class="size-block">
+          <p class="label">РАЗМЕР / УРОВЕНЬ ЗАДАНИЯ</p>
+          <div id="sizeOptions" class="size-options"></div>
+          <div class="task-preview">
+            <span>ЗАДАНИЕ</span>
+            <strong id="taskText"></strong>
           </div>
         </div>
-      </section>
-
-      <section id="donatePage" class="page">
-        <div class="simple-page narrow">
-          <div class="eyebrow">F57 / SUPPORT</div>
-          <h1>Пожертвовать</h1>
-          <p>Поддержка проекта.</p>
-          <form id="donateForm" class="clean-form">
-            <label>Адрес криптокошелька<input id="donateWallet" required placeholder="0x••••••••••••••••"></label>
-            <label>Сумма<input id="donateAmount" required type="number" min="1" placeholder="100"></label>
-            <button class="primary-btn" type="submit">Продолжить</button>
-          </form>
-        </div>
-      </section>
-    </main>
-
-    <div id="productModal" class="modal">
-      <div class="modal-card product-modal-card">
-        <button class="close-btn" data-close="productModal">×</button>
-        <div id="productDetail"></div>
+        <button id="continueOrder" class="primary-btn">Выбрать точку →</button>
       </div>
     </div>
+  </div>
 
-    <div id="mapModal" class="modal">
-      <div class="map-shell">
-        <div class="map-top">
-          <div>
-            <div class="eyebrow">F57 / DELIVERY</div>
-            <h2>Выберите точку получения</h2>
-          </div>
-          <button class="close-btn light" data-close="mapModal">×</button>
+  <!-- MAP -->
+  <div class="modal" id="mapModal">
+    <div class="modal-overlay"></div>
+    <div class="modal-card map-card">
+      <button class="close-modal">×</button>
+      <div class="map-head">
+        <div><p class="eyebrow">F57 / DELIVERY</p><h2>Выберите точку</h2></div>
+        <div id="selectedLocation" class="selected-location">Точка не выбрана</div>
+      </div>
+      <div class="map-wrap" id="mapWrap">
+        <div class="map-stage" id="mapStage">
+          <img id="gtaMap" src="assets/gta-map.png" alt="GTA V map">
+          <div id="mapMarker" class="map-marker hidden"></div>
         </div>
-
-        <div id="mapViewport" class="map-viewport">
-          <div id="mapWorld" class="map-world">
-            <img id="gtaMap" src="gta-map.png" alt="GTA V Map">
-            <div id="mapMarker" class="map-marker"></div>
-          </div>
-          <div class="map-help">Колесо — масштаб · ЛКМ + движение — карта · Клик — выбрать точку</div>
-          <div class="map-controls">
-            <button id="zoomOut">−</button>
-            <button id="zoomReset">•</button>
-            <button id="zoomIn">+</button>
-          </div>
+        <div class="map-help">Колесо — масштаб · ЛКМ — перемещение · клик — поставить точку</div>
+        <div class="zoom-controls">
+          <button id="zoomIn">+</button><button id="zoomOut">−</button><button id="zoomReset">•</button>
         </div>
-
-        <div class="map-bottom">
-          <div>
-            <span class="muted">ТОЧКА ПОЛУЧЕНИЯ</span>
-            <strong id="selectedPoint">Не выбрана</strong>
-          </div>
-          <button id="confirmPoint" class="primary-btn" disabled>Подтвердить точку</button>
-        </div>
+      </div>
+      <div class="map-footer">
+        <p>Точка используется только для доставки по Штату.</p>
+        <button id="confirmLocation" class="primary-btn" disabled>Продолжить →</button>
       </div>
     </div>
+  </div>
 
-    <div id="checkoutModal" class="modal">
-      <div class="modal-card narrow-card">
-        <button class="close-btn" data-close="checkoutModal">×</button>
-        <div class="eyebrow">F57 / PAYMENT</div>
-        <h2>Оплата</h2>
-        <p id="checkoutProduct"></p>
-        <form id="checkoutForm" class="clean-form">
-          <label>Адрес криптокошелька<input id="wallet" required placeholder="0x••••••••••••••••"></label>
-          <label>Подтверждение<input id="walletConfirm" required placeholder="Повторите адрес"></label>
-          <button class="primary-btn" type="submit">Оплатить</button>
-        </form>
-      </div>
+  <!-- ORDER -->
+  <div class="modal" id="orderModal">
+    <div class="modal-overlay"></div>
+    <div class="modal-card narrow">
+      <button class="close-modal">×</button>
+      <p class="eyebrow">F57 / REQUEST</p>
+      <h2>Оформление</h2>
+      <div id="orderSummary" class="summary"></div>
+      <form id="orderForm">
+        <label>OOC ID <span>2–3 цифры</span></label>
+        <input id="oocId" inputmode="numeric" maxlength="3" pattern="\d{2,3}" placeholder="527" required>
+        <label class="check"><input id="rulesAccept" type="checkbox" required><span>Я понимаю условия задания и срок выполнения — 3 дня. (1 игровая сессия)</span></label>
+        <div class="instructions">
+          <b>Инструкция</b>
+          <p>Выполните Задание и сделайте видео отправив его на почту F57commerce@anonim.me. После проверки администратором курьер передаст товар на выбранной точке.</p>
+          <p>OOC: Отправьте в Discord: obogrevatel3000</p>
+        </div>
+        <button class="primary-btn" type="submit">Отправить заявку</button>
+      </form>
     </div>
+  </div>
 
-    <div id="successModal" class="modal">
-      <div class="modal-card success-card">
-        <div class="success-mark">✓</div>
-        <div class="eyebrow">F57 / STATUS</div>
-        <h2>Успешно!</h2>
-        <p id="successText">Заказ принят. Вы получите уведомление, когда курьер прибудет к выбранной точке.</p>
-        <button class="primary-btn" data-close="successModal">Закрыть</button>
-      </div>
+  <!-- SUCCESS -->
+  <div class="modal" id="successModal">
+    <div class="modal-overlay"></div>
+    <div class="modal-card narrow success-card">
+      <div class="success-mark">✓</div>
+      <p class="eyebrow">F57 / ACCEPTED</p>
+      <h2>Заявка принята.</h2>
+      <p id="successText" class="muted-text"></p>
+      <div class="order-code" id="orderCode"></div>
+      <button class="primary-btn close-success">Закрыть</button>
     </div>
+  </div>
 
-    <button id="policeTrigger" title="Restricted access">!</button>
-
-    <div id="policePanel" class="police-overlay">
-      <div class="police-window">
-        <div class="police-header">
-          <div>
-            <span class="miami-badge">LSPD</span>
-            <div class="police-title">LOS-SANTOS POLICE DEPARTMENT</div>
-            <div class="police-subtitle">CYBER &amp; INTELLIGENCE DIVISION / F57 CASE</div>
-          </div>
-          <button id="closePolice" class="police-close">×</button>
-        </div>
-
-        <div class="police-body">
-          <div class="case-banner">
-            <strong>CASE 57-██</strong>
-            <span>Restricted investigative interface</span>
-          </div>
-
-          <div class="police-actions">
-            <button class="investigate-btn" data-action="server">Проверить адрес сервера</button>
-            <button class="investigate-btn" data-action="ip">Вычислить IP</button>
-            <button class="investigate-btn" data-action="trace">Построить маршрут соединения</button>
-            <button class="investigate-btn danger" data-action="hack">Попытаться взломать сайт</button>
-          </div>
-
-          <div id="policeOutput" class="police-output">
-            <div class="terminal-line">[LSPD] Подключение к закрытому делу...</div>
-            <div class="terminal-line">[LSPD] Открытых идентификаторов продавцов не обнаружено.</div>
-            <div class="terminal-line">[LSPD] Выберите действие.</div>
-          </div>
-        </div>
-      </div>
+  <!-- ABOUT -->
+  <div class="modal" id="aboutModal">
+    <div class="modal-overlay"></div>
+    <div class="modal-card narrow">
+      <button class="close-modal">×</button>
+      <p class="eyebrow">F57 / ABOUT</p>
+      <h2>О нас</h2>
+      <p class="about-copy">F57 — сеть для получения бесплатных веществ. Проект существует очень долго и имеет большой круг клиентов. Ни один не был обманут, все получают товар.</p>
+      <p class="about-copy">Идея проста: участник получает вещества без денежной оплаты, выполняя задание. Администратор проверяет заявку и организует доставку.</p>
     </div>
+  </div>
 
-    <div id="hackModal" class="hack-modal">
-      <div class="hack-card">
-        <div class="hack-header">
-          <div>
-            <span class="hack-kicker">F57 / RECOVERY PROTOCOL</span>
-            <h2>Memory sequence</h2>
-          </div>
-          <div id="hackLevel">LEVEL 1 / 6</div>
-        </div>
-        <p id="hackInstruction">Запомните последовательность.</p>
-        <div id="sequenceGrid" class="sequence-grid"></div>
-        <div class="hack-footer">
-          <span id="hackStatus">INITIALIZING...</span>
-          <button id="hackExit" class="ghost-btn">Прервать</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="messengerPage" class="messenger-page">
-      <header class="messenger-header">
-        <div>
-          <span class="hack-kicker">INTERNAL MESSENGER</span>
-          <h1>F57 // ADMIN CONSOLE</h1>
-        </div>
-        <div class="messenger-user">LETO <span>ADMIN</span></div>
-      </header>
-      <div class="messenger-layout">
-        <aside id="chatList" class="chat-list"></aside>
-        <section class="chat-window">
-          <div id="chatTitle" class="chat-title">Выберите диалог</div>
-          <div id="chatMessages" class="chat-messages">
-            <div class="empty-chat">NO MESSAGES</div>
-          </div>
-        </section>
-      </div>
-      <div class="messenger-warning">LOCAL CACHE / EVIDENCE VIEW / SESSION READ-ONLY</div>
+  <!-- ADMIN LOGIN -->
+  <div class="modal" id="adminLoginModal">
+    <div class="modal-overlay"></div>
+    <div class="modal-card narrow admin-login">
+      <button class="close-modal">×</button>
+      <p class="eyebrow">F57 / CONTROL</p>
+      <h2>Вход администратора</h2>
+      <p class="muted-text">Введите код доступа.</p>
+      <form id="adminLoginForm">
+        <input id="adminCode" type="password" autocomplete="off" placeholder="ADMIN CODE" required>
+        <p id="loginError" class="error-text"></p>
+        <button class="primary-btn" type="submit">Войти</button>
+      </form>
     </div>
   </div>
 
