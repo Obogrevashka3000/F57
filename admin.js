@@ -1,179 +1,19 @@
-if(sessionStorage.getItem("f57_admin")!=="1") location.href="index.html";
-
+const { createClient } = supabase;
+const sb = createClient(window.F57_SUPABASE_URL, window.F57_SUPABASE_ANON_KEY);
 const $=s=>document.querySelector(s);
-const ordersEl=$("#orders");
-const mapWrap=$("#adminMapWrap");
-const stage=$("#adminMapStage");
-const map=$("#adminMap");
-const marker=$("#adminMarker");
-
-let scale=1;
-let minScale=1;
-let maxScale=6;
-let panX=0;
-let panY=0;
-let drag=false;
-let moved=false;
-let lx=0;
-let ly=0;
-let selectedOrder=null;
-
-function orders(){
-  return JSON.parse(localStorage.getItem("f57_orders")||"[]");
-}
-
-function render(){
-  const data=orders();
-  $("#count").textContent=`${data.length} ЗАКАЗ${data.length===1?'':'ОВ'}`;
-
-  ordersEl.innerHTML=data.length
-    ? data.map((o,i)=>`
-      <button class="order-row" data-index="${i}">
-        <span>
-          <b>${o.id}</b>
-          <small>${new Date(o.createdAt).toLocaleString('ru-RU')}</small>
-        </span>
-        <span>
-          <b>${o.product}</b>
-          <small>${o.size} · OOC ${o.oocId}</small>
-        </span>
-        <span class="order-status">${o.status}</span>
-      </button>`).join("")
-    : `<div class="empty">Заявок пока нет.</div>`;
-}
-
-function apply(){
-  stage.style.transform=`translate(calc(-50% + ${panX}px),calc(-50% + ${panY}px)) scale(${scale})`;
-}
-
-function fit(){
-  const iw=map.naturalWidth||1;
-  const ih=map.naturalHeight||1;
-  minScale=Math.min(mapWrap.clientWidth/iw,mapWrap.clientHeight/ih);
-  scale=minScale;
-  panX=0;
-  panY=0;
-  apply();
-
-  // If an order was already selected, keep its marker correctly positioned.
-  if(selectedOrder) positionMarker(selectedOrder,false);
-}
-
-function getPoint(o){
-  // New orders store normalized coordinates so the point survives
-  // different screen sizes and map rendering dimensions.
-  if(o.point && Number.isFinite(Number(o.point.nx)) && Number.isFinite(Number(o.point.ny))){
-    return {
-      x:Number(o.point.nx)*(map.naturalWidth||1),
-      y:Number(o.point.ny)*(map.naturalHeight||1)
-    };
-  }
-
-  // Backwards compatibility with old orders that stored raw pixels.
-  if(o.point && Number.isFinite(Number(o.point.x)) && Number.isFinite(Number(o.point.y))){
-    return {x:Number(o.point.x),y:Number(o.point.y)};
-  }
-  return null;
-}
-
-function positionMarker(o,center=true){
-  const p=getPoint(o);
-  if(!p){
-    marker.classList.add("hidden");
-    $("#adminPoint").textContent="ТОЧКА НЕ СОХРАНЕНА";
-    return;
-  }
-
-  marker.style.left=`${p.x}px`;
-  marker.style.top=`${p.y}px`;
-  marker.classList.remove("hidden");
-  $("#adminPoint").textContent=`X ${Math.round(p.x)} / Y ${Math.round(p.y)} · OOC ${o.oocId}`;
-  $(".admin-map").classList.add("has-point");
-
-  if(center){
-    // Put the chosen delivery point near the center of the admin viewport.
-    const r=mapWrap.getBoundingClientRect();
-    panX=r.width/2 - (p.x*scale);
-    panY=r.height/2 - (p.y*scale);
-    apply();
-  }
-}
-
-function showOrder(o,row){
-  selectedOrder=o;
-  document.querySelectorAll('.order-row').forEach(x=>x.classList.remove('selected'));
-  if(row) row.classList.add('selected');
-  positionMarker(o,true);
-}
-
-ordersEl.addEventListener('click',e=>{
-  const row=e.target.closest('.order-row');
-  if(!row)return;
-  const o=orders()[Number(row.dataset.index)];
-  if(o) showOrder(o,row);
-});
-
-map.addEventListener('load',fit);
-window.addEventListener('resize',()=>{
-  const current=selectedOrder;
-  fit();
-  if(current) positionMarker(current,false);
-});
-
-mapWrap.addEventListener('wheel',e=>{
-  e.preventDefault();
-  const old=scale;
-  const next=Math.max(minScale,Math.min(maxScale,scale*(e.deltaY<0?1.12:.89)));
-  const r=mapWrap.getBoundingClientRect();
-  const cx=e.clientX-r.left-r.width/2;
-  const cy=e.clientY-r.top-r.height/2;
-  panX=cx-(cx-panX)*(next/old);
-  panY=cy-(cy-panY)*(next/old);
-  scale=next;
-  apply();
-},{passive:false});
-
-mapWrap.addEventListener('pointerdown',e=>{
-  if(e.button!==0)return;
-  drag=true;
-  moved=false;
-  lx=e.clientX;
-  ly=e.clientY;
-  mapWrap.setPointerCapture(e.pointerId);
-});
-
-mapWrap.addEventListener('pointermove',e=>{
-  if(!drag)return;
-  const dx=e.clientX-lx;
-  const dy=e.clientY-ly;
-  if(Math.abs(dx)>2||Math.abs(dy)>2)moved=true;
-  panX+=dx;
-  panY+=dy;
-  lx=e.clientX;
-  ly=e.clientY;
-  apply();
-});
-
-mapWrap.addEventListener('pointerup',e=>{
-  drag=false;
-  mapWrap.releasePointerCapture?.(e.pointerId);
-});
-
-// Keep the admin list in sync when another F57 tab creates a new order.
-window.addEventListener('storage',e=>{
-  if(e.key!=="f57_orders")return;
-  render();
-  const data=orders();
-  if(data.length && !selectedOrder) showOrder(data[0]);
-});
-
-$("#logout").onclick=()=>{
-  sessionStorage.removeItem('f57_admin');
-  location.href='index.html';
-};
-
-render();
-
-// Automatically display the newest order on login.
-const initial=orders();
-if(initial.length) showOrder(initial[0]);
+const ordersEl=$('#orders'),wrap=$('#adminMapWrap'),stage=$('#adminMapStage'),map=$('#adminMap'),marker=$('#adminMarker');
+let scale=1,minScale=.2,maxScale=6,px=0,py=0,drag=false,sx=0,sy=0,startX=0,startY=0,selected=null,orders=[];
+function apply(){stage.style.transform=`translate(calc(-50% + ${px}px),calc(-50% + ${py}px)) scale(${scale})`}
+function fit(){if(!map.naturalWidth)return;scale=Math.min((wrap.clientWidth-20)/map.naturalWidth,(wrap.clientHeight-20)/map.naturalHeight);scale=Math.max(scale,.12);minScale=scale;px=0;py=0;apply();if(selected)position(selected,false)}
+function point(o){return o?.point&&Number.isFinite(+o.point.nx)&&Number.isFinite(+o.point.ny)?{x:+o.point.nx*map.naturalWidth,y:+o.point.ny*map.naturalHeight}:null}
+function position(o,center=true){const p=point(o);if(!p){marker.classList.add('hidden');$('#adminPoint').textContent='ТОЧКА НЕ СОХРАНЕНА';return}marker.style.left=p.x+'px';marker.style.top=p.y+'px';marker.classList.remove('hidden');$('#adminPoint').textContent=`X ${Math.round(p.x)} / Y ${Math.round(p.y)} · OOC ${o.ooc_id}`;if(center){px=wrap.clientWidth/2-p.x*scale;py=wrap.clientHeight/2-p.y*scale;apply()}}
+function render(){ordersEl.innerHTML=orders.length?orders.map(o=>`<button class="order-row ${selected?.id===o.id?'selected':''}" data-id="${o.id}"><span><b>${o.id}</b><small>${new Date(o.created_at).toLocaleString('ru-RU')}</small></span><span><b>${o.product_name}</b><small>${o.size_name} · OOC ${o.ooc_id}</small></span><span class="order-status">${o.status}</span></button>`).join(''):`<div class="empty">Заявок пока нет.</div>`;$('#count').textContent=`${orders.length} ЗАКАЗОВ`}
+ordersEl.onclick=e=>{const row=e.target.closest('.order-row');if(!row)return;selected=orders.find(o=>o.id===row.dataset.id)||null;render();if(selected)position(selected,true)};
+map.onload=fit;window.onresize=fit;
+wrap.onwheel=e=>{e.preventDefault();const old=scale,n=Math.max(minScale,Math.min(maxScale,scale*(e.deltaY<0?1.12:.89)));const r=wrap.getBoundingClientRect(),cx=e.clientX-r.left-r.width/2,cy=e.clientY-r.top-r.height/2;px=cx-(cx-px)*(n/old);py=cy-(cy-py)*(n/old);scale=n;apply()};
+wrap.onpointerdown=e=>{drag=true;sx=e.clientX;sy=e.clientY;startX=px;startY=py;wrap.setPointerCapture(e.pointerId)};wrap.onpointermove=e=>{if(!drag)return;px=startX+e.clientX-sx;py=startY+e.clientY-sy;apply()};wrap.onpointerup=e=>{drag=false;wrap.releasePointerCapture?.(e.pointerId)};
+async function boot(){const {data:{session}}=await sb.auth.getSession();if(!session){location.href='index.html';return}const {data:admin}=await sb.from('admins').select('user_id').eq('user_id',session.user.id).maybeSingle();if(!admin){await sb.auth.signOut();alert('У аккаунта нет прав администратора.');location.href='index.html';return}await load();subscribe()}
+async function load(){const {data,error}=await sb.from('orders').select('*').order('created_at',{ascending:false});if(error){ordersEl.innerHTML='<div class="empty">Ошибка загрузки заявок.</div>';console.error(error);return}orders=data||[];render();if(orders[0]){selected=orders[0];render();position(selected,true)}}
+function subscribe(){sb.channel('f57-orders').on('postgres_changes',{event:'INSERT',schema:'public',table:'orders'},payload=>{if(!orders.some(o=>o.id===payload.new.id)){orders.unshift(payload.new);render();selected=payload.new;position(selected,true)}}).on('postgres_changes',{event:'UPDATE',schema:'public',table:'orders'},payload=>{const i=orders.findIndex(o=>o.id===payload.new.id);if(i>=0)orders[i]=payload.new;render();if(selected?.id===payload.new.id){selected=payload.new;position(selected,false)}}).subscribe()}
+$('#logout').onclick=async()=>{await sb.auth.signOut();location.href='index.html'};
+boot();

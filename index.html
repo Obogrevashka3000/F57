@@ -1,157 +1,31 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>F57 — Free Network</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>F57</title><link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <aside class="sidebar">
-    <div class="brand">F57<span>/</span></div>
-    <div class="status"><i></i> NETWORK ONLINE</div>
-    <nav>
-      <button class="nav-item active" data-category="all">Все товары</button>
-      <button class="nav-item" data-category="phone">Синтетика</button>
-      <button class="nav-item" data-category="audio">Шприцы и прочее</button>
-      <button class="nav-item" data-category="computer">Травы</button>
-    </nav>
-    <div class="sidebar-bottom">
-      <button id="aboutButton" class="nav-item">О нас</button>
-      <button id="adminButton" class="nav-item muted">Администратор</button>
-    </div>
-  </aside>
+<aside class="sidebar">
+  <div class="brand">F57<span>/</span></div><div class="brand-sub">PRIVATE DISTRIBUTION</div>
+  <nav class="nav"><button class="nav-item active" data-cat="all">Все товары</button><button class="nav-item" data-cat="phones">Порошки</button><button class="nav-item" data-cat="audio">Шприцы</button><button class="nav-item" data-cat="computers">Травы</button></nav>
+  <div class="sidebar-bottom"><button id="aboutBtn" class="nav-item">О нас</button><button id="adminBtn" class="nav-item">Администратор</button><div class="connection"><i></i> NETWORK ONLINE</div></div>
+</aside>
+<main class="content">
+<header class="page-header"><div><p class="eyebrow">F57 / DISTRIBUTION</p><h1>Вещества без лишнего.</h1><p>Выберите вещество и получите задание соответствующего уровня.</p></div><div class="header-meta">SYSTEM / ONLINE</div></header>
+<section id="productsGrid" class="products-grid"></section>
+</main>
 
-  <main class="main">
-    <header class="topbar">
-      <div>
-        <p class="eyebrow">F57 / DISTRIBUTION</p>
-        <h1>Вещества без оплаты.</h1>
-      </div>
-      <div class="top-meta">FREE DRUGS · 057</div>
-    </header>
+<div class="modal" id="productModal"><div class="modal-overlay"></div><div class="modal-card product-detail"><button class="close-modal">×</button><div class="detail-image"><img id="modalImage" src="placeholder.png"></div><div class="detail-content"><p class="eyebrow" id="modalCategory"></p><h2 id="modalName"></h2><p id="modalDescription" class="muted-text"></p><div id="modalSpecs" class="specs"></div><div class="size-block"><p class="label">РАЗМЕР / УРОВЕНЬ</p><div id="sizeOptions" class="size-options"></div><div class="task-preview"><span>ЗАДАНИЕ</span><strong id="taskText"></strong></div></div><button id="continueOrder" class="primary-btn">Выбрать точку →</button></div></div></div>
 
-    <section class="notice">
-      <span>01</span>
-      <p>Выберите вещество, размер и задание. После проверки выполнения вещество передаётся курьером.</p>
-    </section>
+<div class="modal" id="mapModal"><div class="modal-overlay"></div><div class="modal-card map-card"><button class="close-modal">×</button><div class="map-head"><div><p class="eyebrow">F57 / DELIVERY</p><h2>Выберите точку</h2></div><div id="selectedLocation" class="selected-location">Точка не выбрана</div></div><div class="map-wrap" id="mapWrap"><div class="map-stage" id="mapStage"><img id="gtaMap" src="/gta-map.png"><div id="mapMarker" class="map-marker hidden"></div></div><div class="map-help">Колесо — масштаб · ЛКМ — перемещение · клик — поставить точку</div><div class="zoom-controls"><button id="zoomIn">+</button><button id="zoomOut">−</button><button id="zoomReset">•</button></div></div><div class="map-footer"><p>Точка используется только для доставки внутри Штата.</p><button id="confirmLocation" class="primary-btn" disabled>Продолжить →</button></div></div></div>
 
-    <section id="productsGrid" class="products-grid"></section>
-  </main>
+<div class="modal" id="orderModal"><div class="modal-overlay"></div><div class="modal-card narrow"><button class="close-modal">×</button><p class="eyebrow">F57 / REQUEST</p><h2>Оформление</h2><div id="orderSummary" class="summary"></div><form id="orderForm"><label>OOC ID <span>2–3 цифры</span></label><input id="oocId" inputmode="numeric" maxlength="3" pattern="[0-9]{2,3}" placeholder="527" required><label class="check"><input id="rulesAccept" type="checkbox" required><span>Я понимаю условия задания и срок выполнения — 3 дня.</span></label><div class="instructions"><b>Инструкция</b><p>Выполните Задание и сделайте видео отправив его на почту F57commerce@anonim.me. После проверки администратором курьер передаст товар на выбранной точке. (OOC: Отправить в Discord: Obogrevatel3000)</p></div><button class="primary-btn" type="submit">Отправить заявку</button></form></div></div>
 
-  <!-- PRODUCT -->
-  <div class="modal" id="productModal">
-    <div class="modal-overlay"></div>
-    <div class="modal-card product-detail">
-      <button class="close-modal">×</button>
-      <div class="detail-image"><img id="modalImage" src="assets/placeholder.png" alt=""></div>
-      <div class="detail-content">
-        <p class="eyebrow" id="modalCategory"></p>
-        <h2 id="modalName"></h2>
-        <p id="modalDescription" class="muted-text"></p>
-        <div id="modalSpecs" class="specs"></div>
-        <div class="size-block">
-          <p class="label">РАЗМЕР / УРОВЕНЬ ЗАДАНИЯ</p>
-          <div id="sizeOptions" class="size-options"></div>
-          <div class="task-preview">
-            <span>ЗАДАНИЕ</span>
-            <strong id="taskText"></strong>
-          </div>
-        </div>
-        <button id="continueOrder" class="primary-btn">Выбрать точку →</button>
-      </div>
-    </div>
-  </div>
+<div class="modal" id="successModal"><div class="modal-overlay"></div><div class="modal-card narrow success-card"><div class="success-mark">✓</div><p class="eyebrow">F57 / ACCEPTED</p><h2>Заявка принята.</h2><p id="successText" class="muted-text"></p><div class="order-code" id="orderCode"></div><button class="primary-btn close-success">Закрыть</button></div></div>
 
-  <!-- MAP -->
-  <div class="modal" id="mapModal">
-    <div class="modal-overlay"></div>
-    <div class="modal-card map-card">
-      <button class="close-modal">×</button>
-      <div class="map-head">
-        <div><p class="eyebrow">F57 / DELIVERY</p><h2>Выберите точку</h2></div>
-        <div id="selectedLocation" class="selected-location">Точка не выбрана</div>
-      </div>
-      <div class="map-wrap" id="mapWrap">
-        <div class="map-stage" id="mapStage">
-          <img id="gtaMap" src="gta-map.png" alt="GTA V map">
-          <div id="mapMarker" class="map-marker hidden"></div>
-        </div>
-        <div class="map-help">Колесо — масштаб · ЛКМ — перемещение · клик — поставить точку</div>
-        <div class="zoom-controls">
-          <button id="zoomIn">+</button><button id="zoomOut">−</button><button id="zoomReset">•</button>
-        </div>
-      </div>
-      <div class="map-footer">
-        <p>Точка используется только для доставки по Штату.</p>
-        <button id="confirmLocation" class="primary-btn" disabled>Продолжить →</button>
-      </div>
-    </div>
-  </div>
+<div class="modal" id="aboutModal"><div class="modal-overlay"></div><div class="modal-card narrow"><button class="close-modal">×</button><p class="eyebrow">F57 / ABOUT</p><h2>О нас</h2><p class="about-copy">F57 — сеть для получения бесплатных веществ. Проект существует очень долго и имеет большой круг клиентов. Ни один не был обманут, все получают товар.</p><p class="about-copy">Участник получает товар после выполнения задания. Администратор проверяет заявку и организует доставку.</p></div></div>
 
-  <!-- ORDER -->
-  <div class="modal" id="orderModal">
-    <div class="modal-overlay"></div>
-    <div class="modal-card narrow">
-      <button class="close-modal">×</button>
-      <p class="eyebrow">F57 / REQUEST</p>
-      <h2>Оформление</h2>
-      <div id="orderSummary" class="summary"></div>
-      <form id="orderForm">
-        <label>OOC ID <span>2–3 цифры</span></label>
-        <input id="oocId" inputmode="numeric" maxlength="3" pattern="\d{2,3}" placeholder="527" required>
-        <label class="check"><input id="rulesAccept" type="checkbox" required><span>Я понимаю условия задания и срок выполнения — 3 дня. (1 игровая сессия)</span></label>
-        <div class="instructions">
-          <b>Инструкция</b>
-          <p>Выполните Задание и сделайте видео отправив его на почту F57commerce@anonim.me. После проверки администратором курьер передаст товар на выбранной точке.</p>
-          <p>OOC: Отправьте в Discord: obogrevatel3000</p>
-        </div>
-        <button class="primary-btn" type="submit">Отправить заявку</button>
-      </form>
-    </div>
-  </div>
+<div class="modal" id="adminLoginModal"><div class="modal-overlay"></div><div class="modal-card narrow admin-login"><button class="close-modal">×</button><p class="eyebrow">F57 / CONTROL</p><h2>Вход администратора</h2><p class="muted-text">Авторизация защищена</p><form id="adminLoginForm"><input id="adminCode" type="password" autocomplete="current-password" placeholder="ADMIN CODE" required><p id="loginError" class="error-text"></p><button class="primary-btn" type="submit">Войти</button></form></div></div>
 
-  <!-- SUCCESS -->
-  <div class="modal" id="successModal">
-    <div class="modal-overlay"></div>
-    <div class="modal-card narrow success-card">
-      <div class="success-mark">✓</div>
-      <p class="eyebrow">F57 / ACCEPTED</p>
-      <h2>Заявка принята.</h2>
-      <p id="successText" class="muted-text"></p>
-      <div class="order-code" id="orderCode"></div>
-      <button class="primary-btn close-success">Закрыть</button>
-    </div>
-  </div>
-
-  <!-- ABOUT -->
-  <div class="modal" id="aboutModal">
-    <div class="modal-overlay"></div>
-    <div class="modal-card narrow">
-      <button class="close-modal">×</button>
-      <p class="eyebrow">F57 / ABOUT</p>
-      <h2>О нас</h2>
-      <p class="about-copy">F57 — сеть для получения бесплатных веществ. Проект существует очень долго и имеет большой круг клиентов. Ни один не был обманут, все получают товар.</p>
-      <p class="about-copy">Идея проста: участник получает вещества без денежной оплаты, выполняя задание. Администратор проверяет заявку и организует доставку.</p>
-    </div>
-  </div>
-
-  <!-- ADMIN LOGIN -->
-  <div class="modal" id="adminLoginModal">
-    <div class="modal-overlay"></div>
-    <div class="modal-card narrow admin-login">
-      <button class="close-modal">×</button>
-      <p class="eyebrow">F57 / CONTROL</p>
-      <h2>Вход администратора</h2>
-      <p class="muted-text">Введите код доступа.</p>
-      <form id="adminLoginForm">
-        <input id="adminCode" type="password" autocomplete="off" placeholder="ADMIN CODE" required>
-        <p id="loginError" class="error-text"></p>
-        <button class="primary-btn" type="submit">Войти</button>
-      </form>
-    </div>
-  </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js"></script><script src="script.js"></script>
+</body></html>

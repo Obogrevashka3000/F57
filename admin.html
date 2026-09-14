@@ -1,12 +1,1 @@
-<!doctype html>
-<html lang="ru">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>F57 / Admin</title><link rel="stylesheet" href="style.css"></head>
-<body class="admin-page">
-  <aside class="sidebar"><div class="brand">F57<span>/</span></div><div class="status"><i></i> CONTROL ONLINE</div><nav><button class="nav-item active">Заказы</button><button id="logout" class="nav-item">Выйти</button></nav><div class="sidebar-bottom"><span class="eyebrow">ADMIN MODE</span></div></aside>
-  <main class="main">
-    <header class="topbar"><div><p class="eyebrow">F57 / CONTROL</p><h1>Заявки</h1></div><div id="count" class="top-meta"></div></header>
-    <section class="admin-layout"><div id="orders" class="orders"></div><div class="admin-map"><div class="map-admin-head"><span>MAP / DELIVERY POINT</span><span id="adminPoint">—</span></div><div id="adminMapWrap" class="map-wrap"><div id="adminMapStage" class="map-stage"><img id="adminMap" src="gta-map.png" alt="GTA V map"><div id="adminMarker" class="map-marker hidden"></div></div></div></div></section>
-  </main>
-  <script src="admin.js"></script>
-</body>
-</html>
+<!doctype html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>F57 / Admin</title><link rel="stylesheet" href="style.css"></head><body class="admin-page"><aside class="sidebar"><div class="brand">F57<span>/</span></div><div class="brand-sub">CONTROL PANEL</div><nav class="nav"><button class="nav-item active">Заказы</button></nav><div class="sidebar-bottom"><button id="logout" class="nav-item">Выйти</button><div class="connection"><i></i> SECURE ADMIN SESSION</div></div></aside><main class="content admin-content"><header class="page-header"><div><p class="eyebrow">F57 / CONTROL</p><h1>Заказы</h1><p>Заявки поступают в общую базу данных в реальном времени.</p></div><div id="count" class="header-meta">0 ЗАКАЗОВ</div></header><section class="admin-layout"><div id="orders" class="orders"></div><div class="admin-map"><div class="map-admin-head"><span>MAP / DELIVERY POINT</span><span id="adminPoint">—</span></div><div id="adminMapWrap" class="map-wrap"><div id="adminMapStage" class="map-stage"><img id="adminMap" src="assets/gta-map.png"><div id="adminMarker" class="map-marker hidden"></div></div><div class="map-help">Колесо — масштаб · ЛКМ — перемещение</div></div></div></section></main><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js"></script><script src="admin.js"></script></body></html>
